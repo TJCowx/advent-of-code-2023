@@ -15,7 +15,7 @@ fn process_string(s: String) -> String {
     return s_copy;
 }
 
-pub fn part2() {
+pub fn solve() {
     let lines = file_reader::read_as_vec("inputs/day01.txt");
 
     let mut total = 0;

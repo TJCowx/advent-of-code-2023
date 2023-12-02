@@ -2,7 +2,7 @@
 
 use crate::file_reader::file_reader;
 
-pub fn part1() {
+pub fn solve() {
     let lines = file_reader::read_as_vec("inputs/day01.txt");
 
     let mut total = 0;
