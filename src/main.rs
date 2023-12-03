@@ -1,5 +1,6 @@
 mod day01;
 mod day02;
+mod day03;
 pub mod file_reader;
 
 fn main() {
@@ -29,6 +30,14 @@ fn main() {
         "2" => match day_part[1] {
             "1" => day02::part1::solve(),
             "2" => day02::part2::solve(),
+            _ => {
+                eprintln!("There is only 2 parts");
+                std::process::exit(1);
+            }
+        },
+        "3" => match day_part[1] {
+            "1" => day03::part1::solve(),
+            "2" => day03::part2::solve(),
             _ => {
                 eprintln!("There is only 2 parts");
                 std::process::exit(1);
