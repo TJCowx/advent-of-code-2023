@@ -1,6 +1,6 @@
 use crate::file_reader::file_reader;
 
-fn make_num(chars: &mut Vec<char>, x: usize) -> i32 {
+/* fn make_num(chars: &mut Vec<char>, x: usize) -> i32 {
     // Go back in x until not a number and that is first
     let mut first = x;
     while first > 0 && chars[first as usize].is_numeric() {
@@ -52,10 +52,10 @@ fn get_touching_nums(lines: &mut Vec<String>, x: usize, y: usize) -> Vec<i32> {
     if y < lines.len() - 1 {}
 
     nums
-}
+} */
 
 pub fn solve() {
-    let mut lines = file_reader::read_as_vec("inputs/day03-test.txt");
+    /* let mut lines = file_reader::read_as_vec("inputs/day03-test.txt");
 
     let mut sum = 0;
 
@@ -69,7 +69,7 @@ pub fn solve() {
                 println!("Touching nums: {:?}", touching_nums);
             }
         }
-    }
+    } */
 
     println!("Day 03, Part 2");
 }
