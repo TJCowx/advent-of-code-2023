@@ -12,6 +12,7 @@ fn get_current_nums_hash(current_numbers: &Vec<&str>) -> HashSet<String> {
     current_nums_hash
 }
 
+// Memoization would make this not super inefficient
 pub fn solve() {
     let lines = file_reader::read_as_vec("inputs/day04.txt");
 
