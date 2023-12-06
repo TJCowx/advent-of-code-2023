@@ -1,8 +1,4 @@
-use std::collections::HashMap;
-
-use crate::file_reader::file_reader;
-
-#[derive(Debug)]
+/* #[derive(Debug)]
 struct ConversionMap {
     pub source_range_start: u64,
     pub source_range_end: u64,
@@ -88,11 +84,12 @@ fn readable_map_name(key: &usize) -> String {
         6 => "Humidity to Location".to_string(),
         _ => "Unknown".to_string(),
     }
-}
+} */
 
 // TODO: I actually want to solve this
 pub fn solve() {
-    let mut lines = file_reader::read_as_vec("inputs/day05.txt");
+    println!("Day 5 Part 2");
+    /*     let mut lines = file_reader::read_as_vec("inputs/day05.txt");
 
     let mut lowest: u64 = u64::MAX;
 
@@ -104,5 +101,5 @@ pub fn solve() {
 
     println!("Processing maps...");
     let maps = process_maps(&lines);
-    println!("Done processing maps");
+    println!("Done processing maps"); */
 }

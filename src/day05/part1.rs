@@ -7,7 +7,6 @@ struct ConversionMap {
     pub source_range_start: u64,
     pub source_range_end: u64,
     pub target_range_start: u64,
-    pub target_range_end: u64,
 }
 
 fn get_seeds(line: String) -> Vec<u64> {
@@ -52,7 +51,6 @@ fn process_maps(lines: &Vec<String>) -> HashMap<usize, Vec<ConversionMap>> {
             source_range_start: nums[1],
             source_range_end: nums[1] + nums[2] - 1,
             target_range_start: nums[0],
-            target_range_end: nums[0] + nums[2] - 1,
         };
 
         let map_entry = map.get_mut(&key).unwrap();

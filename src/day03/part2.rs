@@ -1,4 +1,4 @@
-use crate::file_reader::file_reader;
+// use crate::file_reader::file_reader;
 
 /* fn make_num(chars: &mut Vec<char>, x: usize) -> i32 {
     // Go back in x until not a number and that is first
