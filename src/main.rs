@@ -4,6 +4,7 @@ mod day03;
 mod day04;
 mod day05;
 mod day06;
+mod day07;
 pub mod file_reader;
 
 fn error_exit(message: &str) {
@@ -48,12 +49,17 @@ fn main() {
         "5" => match day_part[1] {
             "1" => day05::part1::solve(),
             "2" => day05::part2::solve(),
-            "2b" => day05::part2b::solve(),
+            "2b" => day05::part2b::solve(), // B for brute force 😼
             _ => error_exit("There is only 2 parts"),
         },
         "6" => match day_part[1] {
             "1" => day06::part1::solve(),
             "2" => day06::part2::solve(),
+            _ => error_exit("There is only 2 parts"),
+        },
+        "7" => match day_part[1] {
+            "1" => day07::part1::solve(),
+            "2" => day07::part2::solve(),
             _ => error_exit("There is only 2 parts"),
         },
         _ => error_exit("This day has not been implemented yet!"),
