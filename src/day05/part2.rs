@@ -15,7 +15,11 @@ struct ConversionRange {
 
 impl ConversionRange {
     pub fn get_source_end(&self) -> u64 {
-        self.source_start + self.length
+        self.source_start + self.length - 1 // Include the start
+    }
+
+    pub fn get_destination_end(&self) -> u64 {
+        self.destination_start + self.length - 1 // Include the start
     }
 
     pub fn get_offset(&self, val: u64) -> u64 {
@@ -66,7 +70,6 @@ impl ConversionMap {
         }
     }
 
-    // TODO: Logic in here is off, figure it out
     fn get_new_ranges(&self, in_ranges: &mut Vec<ValRange>) -> Vec<ValRange> {
         let mut new_ranges = vec![];
 
@@ -94,8 +97,9 @@ impl ConversionMap {
                             start: range.start,
                             end: range.end,
                         });
-                        continue;
+                        break;
                     }
+
                     // If the range starts before the conversion, we need to split it
                     if range.start < conversion.source_start {
                         // Push anything that is before the start of conversion and don't convert
@@ -111,7 +115,7 @@ impl ConversionMap {
                     if range.end > conversion.get_source_end() {
                         new_ranges.push(ValRange {
                             start: conversion.get_destination_val(range.start),
-                            end: conversion.get_destination_val(conversion.get_source_end()),
+                            end: conversion.get_destination_end(),
                         });
 
                         range.start = conversion.get_source_end() + 1;
@@ -120,18 +124,12 @@ impl ConversionMap {
                     }
 
                     // If the whole range is in the conversion, just convert it
-                    if range.start >= conversion.source_start
-                        && range.end <= conversion.get_source_end()
-                    {
-                        new_ranges.push(ValRange {
-                            start: conversion.get_destination_val(range.start),
-                            end: conversion.get_destination_val(range.end),
-                        });
+                    new_ranges.push(ValRange {
+                        start: conversion.get_destination_val(range.start),
+                        end: conversion.get_destination_val(range.end),
+                    });
 
-                        break;
-                    }
-
-                    println!("I feel like this should never happen");
+                    break;
                 }
             }
         }
@@ -165,7 +163,7 @@ fn get_seeds(line: String) -> Vec<ValRange> {
 
 pub fn solve() {
     println!("Day 5 Part 2");
-    let lines = file_reader::read_as_vec("inputs/day05-test.txt");
+    let lines = file_reader::read_as_vec("inputs/day05.txt");
 
     // let mut lowest: u64 = u64::MAX;
 
@@ -192,23 +190,24 @@ pub fn solve() {
 
     println!("Generating Seed to Soil");
     let mut soil_ranges = seed_to_soil.get_new_ranges(&mut seeds);
-    println!("Soil Ranges: {:#?}", soil_ranges);
+
     println!("Generating Soil to Fertilizer");
     let mut fertilizer_ranges = soil_to_fertilizer.get_new_ranges(&mut soil_ranges);
-    println!("Fertilizer Ranges: {:#?}", fertilizer_ranges);
+
     println!("Generating Fertilizer to Water");
     let mut water_ranges = fertilizer_to_water.get_new_ranges(&mut fertilizer_ranges);
-    println!("Water Ranges: {:#?}", water_ranges);
+
     println!("Generating Water to Light");
     let mut light_ranges = water_to_light.get_new_ranges(&mut water_ranges);
-    println!("Light Ranges: {:#?}", light_ranges);
+
     println!("Generating Light to Temp");
     let mut temp_ranges = light_to_temp.get_new_ranges(&mut light_ranges);
-    println!("Temp Ranges: {:#?}", temp_ranges);
+
     println!("Generating Temp to Humidity");
     let mut humidity_ranges = temp_to_humidity.get_new_ranges(&mut temp_ranges);
-    println!("Humidity Ranges: {:#?}", humidity_ranges);
+
     println!("Generating Humidity to Location");
-    let mut location_ranges = humidity_to_location.get_new_ranges(&mut humidity_ranges);
-    println!("Final Ranges: {:#?}", location_ranges);
+    let location_ranges = humidity_to_location.get_new_ranges(&mut humidity_ranges);
+
+    println!("Final value: {}", location_ranges[0].start);
 }

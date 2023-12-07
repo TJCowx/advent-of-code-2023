@@ -83,20 +83,9 @@ fn process_maps(lines: &Vec<String>) -> HashMap<usize, Vec<ConversionMap>> {
     map
 }
 
-fn readable_map_name(key: &usize) -> String {
-    match key {
-        0 => "Seed to Soil".to_string(),
-        1 => "Soil to Fertilizer".to_string(),
-        2 => "Fertilizer to Water".to_string(),
-        3 => "Water to Light".to_string(),
-        4 => "Light to Temp".to_string(),
-        5 => "Temp to Humidity".to_string(),
-        6 => "Humidity to Location".to_string(),
-        _ => "Unknown".to_string(),
-    }
-}
-
 // This is a brute force solution that takes ~1.8 billion iterations
+// Takes my laptop > 3 hours to run before I quit running it
+// Answer: 20358599
 pub fn solve() {
     let mut lines = file_reader::read_as_vec("inputs/day05.txt");
 
