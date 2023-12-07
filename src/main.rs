@@ -48,6 +48,7 @@ fn main() {
         "5" => match day_part[1] {
             "1" => day05::part1::solve(),
             "2" => day05::part2::solve(),
+            "2b" => day05::part2b::solve(),
             _ => error_exit("There is only 2 parts"),
         },
         "6" => match day_part[1] {
