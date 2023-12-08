@@ -1,75 +1,102 @@
-// use crate::file_reader::file_reader;
+use regex::Regex;
 
-/* fn make_num(chars: &mut Vec<char>, x: usize) -> i32 {
-    // Go back in x until not a number and that is first
-    let mut first = x;
-    while first > 0 && chars[first as usize].is_numeric() {
-        first -= 1;
+use crate::file_reader::file_reader;
+
+// X, Y
+#[derive(Debug, PartialEq)]
+struct Coord(i32, i32);
+// Val, Start, End
+#[derive(Debug)]
+struct Pos<'a>(&'a str, Coord, Coord);
+
+fn get_nums(lines: &Vec<String>) -> Vec<Pos> {
+    let mut num_positions: Vec<Pos> = Vec::new();
+    // Regex to get numbers
+    let reg = Regex::new(r"\d+").unwrap();
+    for (x, line) in lines.iter().enumerate() {
+        for cap in reg.find_iter(line) {
+            let start_coord = Coord(cap.start() as i32, x as i32);
+            let end_coord = Coord(cap.end() as i32 - 1, x as i32);
+            num_positions.push(Pos(cap.as_str(), start_coord, end_coord));
+        }
     }
 
-    let mut last = x;
-    while last < chars.len() as usize && chars[last as usize].is_numeric() {
-        last += 1;
-    }
-
-    // Get the chars and parse into a number, replace chars with a "V"
-    let num: String = chars[first + 1..last].iter().collect();
-    let num: i32 = num.parse().unwrap();
-    for i in first..=last {
-        chars[i] = 'V';
-    }
-
-    num
+    num_positions
 }
 
-fn get_touching_nums(lines: &mut Vec<String>, x: usize, y: usize) -> Vec<i32> {
-    let mut nums = Vec::new();
-
-    // Check left
-    if x > 0 {
-        let chars: &mut Vec<char> = &mut lines[y].chars().into_iter().collect();
-        let prev_char = chars.nth(x - 1).unwrap();
-        if prev_char.is_numeric() {
-            nums.push(make_num(chars, x - 1));
-            lines[y] = chars.into_iter().collect();
-        }
-    }
-
-    // Check right
-    if x < lines[y].len() - 1 {
-        let chars = &mut lines[y].chars().into_iter().collect();
-        let next_char = chars.nth(x + 1).unwrap();
-        if next_char.is_numeric() {
-            nums.push(make_num(chars, x + 1));
-            lines[y] = chars.into_iter().collect();
-        }
-    }
-
-    // Check above
-    if y > 0 {}
-
-    // Check below
-    if y < lines.len() - 1 {}
-
-    nums
-} */
-
-pub fn solve() {
-    /* let mut lines = file_reader::read_as_vec("inputs/day03-test.txt");
-
-    let mut sum = 0;
-
-    for i in 0..lines.len() {
-        // Now we have the line, we need to search for '*'s
-        let line = &lines[i];
-        for j in 0..line.len() {
-            if line.chars().nth(j).unwrap() == '*' {
-                println!("Found * at line: {}, character: {}", i, j);
-                let touching_nums = get_touching_nums(&mut lines, j, i);
-                println!("Touching nums: {:?}", touching_nums);
+fn get_gears(lines: &Vec<String>) -> Vec<Coord> {
+    let mut gears: Vec<Coord> = Vec::new();
+    for (x, line) in lines.iter().enumerate() {
+        for (y, c) in line.chars().enumerate() {
+            if c == '*' {
+                gears.push(Coord(y as i32, x as i32));
             }
         }
-    } */
+    }
 
-    println!("Day 03, Part 2");
+    gears
+}
+
+fn get_gear_ratio(gears: &Vec<Coord>, nums: &Vec<Pos>, max_y: usize, max_x: usize) -> i32 {
+    let mut gear_ratio = 0;
+
+    for gear in gears {
+        println!("\n\nGear: {:?}", gear);
+        println!("______________");
+        let neighbors = vec![
+            Coord(gear.0 - 1, gear.1 - 1),
+            Coord(gear.0, gear.1 - 1),
+            Coord(gear.0 + 1, gear.1 - 1),
+            Coord(gear.0 - 1, gear.1),
+            Coord(gear.0 + 1, gear.1),
+            Coord(gear.0 - 1, gear.1 + 1),
+            Coord(gear.0, gear.1 + 1),
+            Coord(gear.0 + 1, gear.1 + 1),
+        ]
+        .into_iter()
+        .filter(|Coord(x, y)| *x >= 0 && *y >= 0 && *x < max_x as i32 && *y < max_y as i32)
+        .collect::<Vec<Coord>>();
+
+        println!("Gear: {:?}", gear);
+        println!("Neighbors: {:?}", neighbors);
+
+        let mut ratios = Vec::new();
+
+        // Loop through the numbers and check if they are in the neighbors
+        for num in nums {
+            // Check if the number is in the neighbors
+            for neighbor in &neighbors {
+                // The y of the neighbour is the same as the y of the number
+                let y_match = neighbor.1 == num.1 .1;
+                // The x of the neighbour is between the start and end of the number inclusive
+                let x_match = neighbor.0 >= num.1 .0 && neighbor.0 <= num.2 .0;
+
+                if y_match && x_match {
+                    println!("Num: {:?}", num);
+                    println!("Neighbor: {:?}", neighbor);
+                    ratios.push(num.0.parse::<i32>().unwrap());
+                    break;
+                }
+            }
+        }
+
+        println!("!!!!Ratios: {:?}", ratios);
+        if ratios.len() == 2 {
+            println!("!!!!Ratios: {:?}", ratios);
+            gear_ratio += ratios[0] * ratios[1];
+        }
+    }
+
+    gear_ratio
+}
+
+pub fn solve() {
+    let lines = file_reader::read_as_vec("inputs/day03.txt");
+
+    let num_positions = get_nums(&lines);
+    let gears = get_gears(&lines);
+
+    let ratio = get_gear_ratio(&gears, &num_positions, lines.len(), lines[0].len());
+
+    println!("Gear ratio: {}", ratio);
 }
