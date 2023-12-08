@@ -1,3 +1,5 @@
+use std::time::Instant;
+
 mod day01;
 mod day02;
 mod day03;
@@ -14,6 +16,7 @@ fn error_exit(message: &str) {
 }
 
 fn main() {
+    let start = Instant::now();
     let args: Vec<String> = std::env::args().collect();
     if args.len() < 2 {
         error_exit("Please enter the day and part number (EG: 1.1 for day 2 part 1)");
@@ -70,4 +73,6 @@ fn main() {
         },
         _ => error_exit("This day has not been implemented yet!"),
     }
+
+    println!("Time taken: {}ms", start.elapsed().as_millis());
 }
