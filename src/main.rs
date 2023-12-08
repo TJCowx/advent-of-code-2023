@@ -5,6 +5,7 @@ mod day04;
 mod day05;
 mod day06;
 mod day07;
+mod day08;
 pub mod file_reader;
 
 fn error_exit(message: &str) {
@@ -60,6 +61,11 @@ fn main() {
         "7" => match day_part[1] {
             "1" => day07::part1::solve(),
             "2" => day07::part2::solve(),
+            _ => error_exit("There is only 2 parts"),
+        },
+        "8" => match day_part[1] {
+            "1" => day08::part1::solve(),
+            "2" => day08::part2::solve(),
             _ => error_exit("There is only 2 parts"),
         },
         _ => error_exit("This day has not been implemented yet!"),
