@@ -14,6 +14,17 @@ mod day11;
 mod day12;
 mod day13;
 mod day14;
+mod day15;
+mod day16;
+mod day17;
+mod day18;
+mod day19;
+mod day20;
+mod day21;
+mod day22;
+mod day23;
+mod day24;
+mod day25;
 pub mod file_reader;
 
 fn error_exit(message: &str) {
@@ -106,6 +117,60 @@ fn main() {
             "1" => day14::part1::solve(),
             "2" => day14::part2::solve(),
             _ => error_exit("There is only 2 parts"),
+        },
+        "15" => match day_part[1] {
+            "1" => day15::part1::solve(),
+            "2" => day15::part2::solve(),
+            _ => error_exit("There is only 2 parts"),
+        },
+        "16" => match day_part[1] {
+            "1" => day16::part1::solve(),
+            "2" => day16::part2::solve(),
+            _ => error_exit("There is only 2 parts"),
+        },
+        "17" => match day_part[1] {
+            "1" => day17::part1::solve(),
+            "2" => day17::part2::solve(),
+            _ => error_exit("There is only 2 parts"),
+        },
+        "18" => match day_part[1] {
+            "1" => day18::part1::solve(),
+            "2" => day18::part2::solve(),
+            _ => error_exit("There is only 2 parts"),
+        },
+        "19" => match day_part[1] {
+            "1" => day19::part1::solve(),
+            "2" => day19::part2::solve(),
+            _ => error_exit("There is only 2 parts"),
+        },
+        "20" => match day_part[1] {
+            "1" => day20::part1::solve(),
+            "2" => day20::part2::solve(),
+            _ => error_exit("There is only 2 parts"),
+        },
+        "21" => match day_part[1] {
+            "1" => day21::part1::solve(),
+            "2" => day21::part2::solve(),
+            _ => error_exit("There is only 2 parts"),
+        },
+        "22" => match day_part[1] {
+            "1" => day22::part1::solve(),
+            "2" => day22::part2::solve(),
+            _ => error_exit("There is only 2 parts"),
+        },
+        "23" => match day_part[1] {
+            "1" => day23::part1::solve(),
+            "2" => day23::part2::solve(),
+            _ => error_exit("There is only 2 parts"),
+        },
+        "24" => match day_part[1] {
+            "1" => day24::part1::solve(),
+            "2" => day24::part2::solve(),
+            _ => error_exit("There is only 2 parts"),
+        },
+        "25" => match day_part[1] {
+            "1" => day25::part1::solve(),
+            _ => error_exit("There is only 1 part"),
         },
         _ => error_exit("This day has not been implemented yet!"),
     }
