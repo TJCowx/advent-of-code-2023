@@ -170,7 +170,8 @@ fn main() {
         },
         "25" => match day_part[1] {
             "1" => day25::part1::solve(),
-            _ => error_exit("There is only 1 part"),
+            "2" => day25::part2::solve(),
+            _ => error_exit("There is only 2 parts"),
         },
         _ => error_exit("This day has not been implemented yet!"),
     }
